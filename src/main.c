@@ -28,6 +28,32 @@
 // }
 
 
+void read_csv(char exit_format, char name_file, bool save, char col_nahs, char affi){
+    FILE* file = fopen("csrankings.csv", "r");
+    char name[50];
+    char affiliation[50]; 
+    char homepage[250];
+    char scholarid[50];
+    char line[500];
+    char *token;
+    
+     while(fscanf(file, "%s\n", line) != EOF){
+        token = strtok(line, ",");
+        strcpy(name, token);
+        token = strtok(line, ",");
+        strcpy(affiliation, token);
+        token = strtok(line, ",");
+        strcpy(homepage, token);
+        token = strtok(line, ",");
+        strcpy(scholarid, token);
+        printf("%s,%s,%s,%s\n", name, affiliation,homepage, scholarid);
+    }
+    
+    fclose(file);
+}
+
+
+
 int main (int argc, char* argv[])
 {
     int i = 1;
@@ -65,6 +91,8 @@ int main (int argc, char* argv[])
             i += 2;
         }
     
+    
+    read_csv(*exit_format, *name_file, save, *col_nahs, *affi);
     
     
     
