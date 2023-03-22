@@ -12,23 +12,36 @@
 #include <string.h>
 #include <errno.h>
 
-/**
- * @brief      Compares 3 arrays of integers
- *
- * @param      t1    1st array
- * @param      t2    2nd array
- * @param      t3    3rd array
- * @param[in]  N     the first N cells will to be checked
- *
- * @return     { description_of_the_return_value }
- */
-// bool compare_tab (int t1[], int t2[], int t3[], unsigned int N)
-// {
-//     
-// }
+#define MAX_LENGTH 1024 //Taille max des chaines de caractères
 
+
+typedef struct membre {
+    char name[MAX_LENGTH];
+    char affiliation[MAX_LENGTH];
+    char homepage[MAX_LENGTH];
+    char scholarid[MAX_LENGTH];
+} Membre;
+
+
+typedef struct parametres{
+    char exit_format ; // 0:yaml | 1:json
+    char name_file[MAX_LENGTH];
+    bool save;
+    int col_nahs[4];
+    char affi[MAX_LENGTH];
+} Parametres;
+
+
+
+
+/**
+ * @brief      Supprime les guillemets d'une chaîne de caractère
+ *
+ * @param      str   Chaine de caractère
+ */
 void trim_quote(char *str){
     char *new_str;
+    
     new_str = strchr(str, '\"');
     while (new_str){
         new_str[0] = ' ';
@@ -36,61 +49,109 @@ void trim_quote(char *str){
     }
 }
 
-void write_json(FILE *exit_file, char *name, char *affiliation, char *homepage, char *scholarid, int col_nahs[]){
-    char str[500];
+
+
+
+/**
+ * @brief      Supprime les tabulations d'une chaîne de caractère
+ *
+ * @param      str   Chaine de caractère
+ */
+void trim_tab(char *str){
+    char *new_str;
     
-    fwrite("\t{\n" , 1 , 3 , exit_file );
+    new_str = strchr(str, '\t');
+    while (new_str){
+        new_str[0] = ' ';
+        new_str = strchr(str, '\"');
+    }
+}
+
+
+/**
+ * @brief      Ecrit les différentes informations dans le fichier JSON donné en paramètre
+ *
+ * @param      exit_file    Fichier json
+ * @param      name         Nom du membre
+ * @param      affiliation  Affiliation du membre
+ * @param      homepage     HomePage du membre
+ * @param      scholarid    Scholarid du membre
+ * @param      col_nahs     Tableau des informations du membre à écrire ou non
+ */
+void write_json(FILE *exit_file, char *name, char *affiliation, char *homepage, char *scholarid, int col_nahs[]){
+    char str[MAX_LENGTH];
+
+    strcpy(str, "\t\t{\n");
     for (int i = 0; i < 4; i++){
         if (col_nahs[i] == 1){
             switch(i){
                 case 0:
-                    strcat(str ,"\t\t\"Name\": \"");
+                    strcat(str ,"\t\t\t\"Name\": \"");
                     strcat(str, name);
                     break;
                 case 1:
-                    strcat(str ,"\t\t\"Affiliation\": \"");
+                    strcat(str ,"\t\t\t\"Affiliation\": \"");
                     strcat(str, affiliation);
                     break;
                 case 2:
-                    strcat(str ,"\t\t\"Homepage\": \"");
+                    strcat(str ,"\t\t\t\"Homepage\": \"");
                     strcat(str, homepage);
                     break;
                 case 3:
-                    strcat(str ,"\t\t\"Scholarid\": \"");
+                    strcat(str ,"\t\t\t\"Scholarid\": \"");
                     strcat(str, scholarid);
                     break;
            }
            strcat(str, "\",\n");
         }
     }
-    str[strlen(str)-2] = 0;
-    strcat(str, "\n");
-    fwrite(str , 1 , strlen(str) , exit_file);
-    strcpy(str, "");
-    fwrite("\t}" , 1 , 2 , exit_file);
+    str[strlen(str)-2] = 0; //pour enlever le dernier ","
+    strcat(str, "\n\t\t}");
+    
+    fwrite(str , sizeof(char) , strlen(str) , exit_file);
 }
 
 
 void write_yaml(FILE *exit_file, char *name, char *affiliation, char *homepage, char *scholarid, int col_nahs[]){
+    char str[MAX_LENGTH];
+    int first = 1;
+
     for (int i = 0; i < 4; i++){
+        if (first){
+             strcpy(str, "-");
+            first = 0;
+        } else {
+            strcat(str, " ");
+        }
+        
         if (col_nahs[i] == 1){
             switch(i){
                 case 0:
-                    printf("Name: %s ", name);
+                    strcat(str ," Name: \"");
+                    strcat(str, name);
+                    strcat(str, "\"");
                     break;
                 case 1:
-                    printf("Affiliation: %s  ", affiliation);
+                    strcat(str ," Affiliation: \"");
+                    strcat(str, affiliation);
+                    strcat(str, "\"");
                     break;
                 case 2:
-                    printf("Site web: %s  ", homepage);
+                    strcat(str ," Homepage: ");
+                    strcat(str, homepage);
                     break;
                 case 3:
-                    printf("scholarid: %s  ", scholarid);
+                    strcat(str ," Scholarid: ");
+                    strcat(str, scholarid);
                     break;
            }
+           strcat(str, "\n");
         }
     }
+    strcat(str, "\n");
+    fwrite(str , sizeof(char) , strlen(str) , exit_file);
 }
+
 
 
 
@@ -122,13 +183,13 @@ void print_selectif(char *name, char *affiliation, char *homepage, char *scholar
 
 void read_csv(int exit_format, char *name_file, bool save, int col_nahs[], char *affi){
     //Déclaration des variables
-        char name[50];
-        char affiliation[50]; 
-        char homepage[250];
-        char scholarid[50];
-        char line[500];
+        char name[MAX_LENGTH];
+        char affiliation[MAX_LENGTH]; 
+        char homepage[MAX_LENGTH];
+        char scholarid[MAX_LENGTH];
+        char line[MAX_LENGTH];
         char *token;
-        char str[150]
+        char str[MAX_LENGTH];
         FILE* exit_file;
         int first = 1;
     
@@ -145,16 +206,25 @@ void read_csv(int exit_format, char *name_file, bool save, int col_nahs[], char 
             if(save){
                 if (exit_format){ //json
                     exit_file = fopen(strcat(name_file, ".json"), "w");
-                    fwrite("{\n" , 1 , 2 , exit_file );
+                    strcpy(str, "{\n\t\"affiliation\": \"");
+                    strcat(str, affi);
+                    strcat(str, "\",\n\t\"members\":[\n");
+                    fwrite(str , sizeof(char), strlen(str) , exit_file );
                 } else { //yaml
-                exit_file = fopen(strcat(name_file, ".yaml"), "w");
+                    exit_file = fopen(strcat(name_file, ".yaml"), "w");
+                    strcpy(str, "---\naffiliation: \"");
+                    strcat(str, affi);
+                    strcat(str, "\"\nmembers:\n");
+                    fwrite(str , sizeof(char), strlen(str) , exit_file );
                 }
             } 
         
         //Ecriture ou print pour chaque ligne
             fgets(line, sizeof(line), file);
             while(!feof(file)){
+                int prnt = 0;
                 trim_quote(line);
+                trim_tab(line);
                 //On récupérer les élèments de la ligne
                     token = strtok(line, ",");
                     strcpy(name, token);
@@ -165,20 +235,28 @@ void read_csv(int exit_format, char *name_file, bool save, int col_nahs[], char 
                     token = strtok(NULL, ",");
                     strcpy(scholarid,token);
                 
+                if (strcmp(affi, affiliation) == 0){
+                    prnt = 1;
+                }
+                    
+                    
                 //On supprime le retour à la ligne
                     scholarid[strcspn(scholarid, "\r\n")] = 0;
 
                     fgets(line, sizeof(line), file);
                 //Ecriture si save sinon on print
-                    if (!first) {
-                        if(save){
+                    if (!first) { //on skip la première ligne car entête des colonnes
+                        if(save && prnt){
                             if (exit_format){ //json
                                 write_json(exit_file, name, affiliation, homepage, scholarid, col_nahs);
-                                if (!feof(file))  fwrite(",\n" , 1 , 2 , exit_file );
+                                if (!feof(file)){
+                                    strcpy(str, ",\n");
+                                    fwrite(str , sizeof(char) , strlen(str) , exit_file );
+                                }
                             } else { //yaml
                                 write_yaml(exit_file, name, affiliation, homepage, scholarid, col_nahs);
                             }
-                        } else {
+                        } else if(prnt) {
                             print_selectif(name, affiliation, homepage, scholarid, col_nahs);
                         }
                     } else {
@@ -189,9 +267,8 @@ void read_csv(int exit_format, char *name_file, bool save, int col_nahs[], char 
         //Fin du fichier
             if(save){
                 if (exit_format){ //json
-                    fwrite("\n}" , 1 , 2 , exit_file );
-                } else { //yaml
-                exit_file = fopen(strcat(name_file, ".yaml"), "a");
+                    strcpy(str, "\t]\n}");
+                    fwrite(str , sizeof(char), strlen(str) , exit_file );
                 }
                 fclose(exit_file);
             } 
@@ -269,9 +346,6 @@ int main (int argc, char* argv[])
     read_csv(exit_format, name_file, save, col_nahs, affi);
     
     //printf("n: %d, a: %d, h: %d, s: %d\n", col_nahs[0], col_nahs[1], col_nahs[2], col_nahs[3]);
-    
-    
-    
     
     return 0;
 }
