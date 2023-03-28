@@ -5,13 +5,13 @@ EXTRA_CFLAGS=-fprofile-arcs -ftest-coverage # utile pour calculer la couverture 
 EXTRA_LDFLAGS=--coverage # edition de liens avec couverture de code
 
 #### Variables liées à la compilation des sources
-OBJ=build/utils.o build/sort_algorithms.o
-EXEC=build/tri_comp
+ OBJ=build/utils.o 
+ EXEC=build/utils
 
 #### Variables liées à la compilation des tests unitaires
 TEST_SRC=tests/unit_tests.c
 TEST_OBJ=build/unit_tests.o
-TEST_EXEC=build/tri_tests
+TEST_EXEC=build/test
 TEST_LDFLAGS=-lcheck -lpthread -lm
 TEST_OS_DEP_LFLAGS=
 
@@ -30,14 +30,13 @@ main: $(EXEC)
 $(EXEC): build/main.o $(OBJ)
 	$(CC) $^ $(EXTRA_LDFLAGS) -o $(EXEC)
 
-build/main.o: src/main.c includes/sort_algorithms.h includes/utils.h
+build/main.o: src/main.c includes/utils.h
 	$(CC) $(CFLAGS) -c $< -o $@
 
 build/utils.o: src/utils.c includes/utils.h
 	$(CC) $(CFLAGS) $(EXTRA_CFLAGS) -c $< -o $@
 
-build/sort_algorithms.o: src/sort_algorithms.c includes/sort_algorithms.h includes/utils.h
-	$(CC) $(CFLAGS) $(EXTRA_CFLAGS) -c $< -o $@
+
 #####################################################
 
 
