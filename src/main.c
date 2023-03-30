@@ -38,7 +38,7 @@ int main (int argc, char* argv[])
             else if  (strcmp(argv[i], "-f") == 0)
             {
                 for(int i = 0; i<4; i++) param.col_nahs[i] = 0;
-                for (int j = 0; j < sizeof(argv[i+1]); j++){
+                for (int j = 0; j < (int) sizeof(argv[i+1]); j++){
                     switch (argv[i+1][j]) {
                         case 'n':
                             param.col_nahs[0] = 1;

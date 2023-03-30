@@ -35,20 +35,12 @@ typedef struct parametres{
 
 
 /**
- * @brief      Supprime les guillemets d'une chaîne de caractère
+ * @brief      Supprime les caractères indésirables d'une chaîne de caractères
  *
- * @param      str   Chaine de caractère
+ * @param      str       Chaîne de caractères
+ * @param      unwanted  Caractère indésirable
  */
-void trim_quote(char *str);
-
-
-/**
- * @brief      Supprime les tabulations d'une chaîne de caractère
- *
- * @param      str   Chaine de caractère
- */
-void trim_tab(char *str);
-
+void trim_unwanted_chars(char *str, char unwanted);
 
 
 /**

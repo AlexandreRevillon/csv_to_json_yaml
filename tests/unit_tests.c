@@ -14,22 +14,41 @@
  *        has been initialized
  */
 
+START_TEST(test_trim_unwanted_chars_with_unwanted) {
+    char str_test[] = "Texte avec\tdes \"caracteres indesirables\"";
+    char str_result[] = "Texte avec des  caracteres indesirables ";
 
-START_TEST (test_trim_quote) { 
-    char str_test[] = {"\"Texte avec des quotes\""};
-    char str_result[] = {" Texte avec des quotes "};
-    trim_quote(str_test);
-    
-   ck_assert_str_eq(str_test, str_result);
+    trim_unwanted_chars(str_test, '\"');
+    trim_unwanted_chars(str_test, '\t');
+
+    ck_assert_str_eq(str_test, str_result);
 }
 END_TEST
 
 
-Suite *sort_suite (void)
+START_TEST(test_trim_unwanted_chars_without_unwanted) {
+    char str_test[] = "Texte avec des caracteres indesirables";
+    char str_result[] = "Texte avec des caracteres indesirables";
+
+    trim_unwanted_chars(str_test, '\"');
+    trim_unwanted_chars(str_test, '\t');
+
+    ck_assert_str_eq(str_test, str_result);
+}
+END_TEST
+
+
+
+
+
+
+
+Suite *functions_suite (void)
 {
-    Suite *s       = suite_create ("SortAlgorithms");
+    Suite *s       = suite_create ("functions");
     TCase *tc_core = tcase_create ("Core");
-    tcase_add_test (tc_core, test_trim_quote);
+    tcase_add_test (tc_core, test_trim_unwanted_chars_with_unwanted);
+    tcase_add_test (tc_core, test_trim_unwanted_chars_without_unwanted);
     suite_add_tcase (s, tc_core);
 
     return s;
@@ -38,7 +57,7 @@ Suite *sort_suite (void)
 int main (void)
 {
  int      no_failed = 0;
-    Suite   *s         = sort_suite ();
+    Suite   *s         = functions_suite ();
     SRunner *runner    = srunner_create (s);
     srunner_run_all (runner, CK_NORMAL);
     no_failed = srunner_ntests_failed (runner);
