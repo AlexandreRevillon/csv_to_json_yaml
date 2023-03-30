@@ -1,8 +1,8 @@
 /**
  * @brief      This file implements unit tests for sorting algorithms
  *
- * @author     Jeremie
- * @date       2022
+ * @author     Alexandre REVILLON & Arthur DUPIRE
+ * @date       2023
  */
 #include <check.h>
 #include <stdlib.h>
