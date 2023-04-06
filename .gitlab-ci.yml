@@ -40,8 +40,8 @@ job:build:
 job:test:
     stage: test
     script:
-        - make tests
-        - build/tri_tests
+        - make
+        - build/utils
     when: on_success
     artifacts:
         paths:
@@ -49,7 +49,7 @@ job:test:
 
 job:memcheck:
     stage: test
-    script: valgrind build/tri_comp
+    script: valgrind build/utils
     when: on_success
 
 job:coverage:
