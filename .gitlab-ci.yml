@@ -40,9 +40,9 @@ job:build:
 job:test:
     stage: test
     script:
-        - make
+        - make test
         - build/utils
-    when: on_success
+    when: always
     artifacts:
         paths:
             - build/
@@ -50,7 +50,7 @@ job:test:
 job:memcheck:
     stage: test
     script: valgrind build/utils
-    when: on_success
+    when: always
 
 job:coverage:
     stage: coverage
