@@ -185,6 +185,7 @@ void read_csv(Parametres param){
                 fclose(exit_file);
             } 
     
+    
     //fermeture du csv
         fclose(file);  
 }
