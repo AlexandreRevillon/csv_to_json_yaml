@@ -60,7 +60,7 @@ job:coverage:
         - mkdir report
         - genhtml cov.info -o report
     coverage: '/^\s*lines\S*\s*(\d+(?:\.\d+)?%)\s*/'
-    when: on_success
+    when: always
     dependencies:
         - job:test
     artifacts:
