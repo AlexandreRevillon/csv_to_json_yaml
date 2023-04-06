@@ -83,12 +83,12 @@ void write_output(FILE *exit_file, Membre m, Parametres p) {
 }
 
 /**
-  * @brief      Permet de lire le fichier csv et d'afficher ou ecrire dans un
-  * fichier json ou yaml la sortie
-  *
-  * @param      param  structure contenant les paramètre d'affichage ou de
-  * sauvegarde
-  */
+ * @brief      Permet de lire le fichier csv et d'afficher ou ecrire dans un
+ * fichier json ou yaml la sortie
+ *
+ * @param      param  structure contenant les paramètre d'affichage ou de
+ * sauvegarde
+ */
 void read_csv(Parametres param) {
   // Déclaration des variables
   Membre m;
