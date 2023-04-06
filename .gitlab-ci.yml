@@ -15,7 +15,7 @@ stages:
 
 job:codestyling:
     stage: codestyling
-    script: ./scripts/run-clang-format.py -r src includes tests
+    script: python3 ./scripts/run-clang-format.py -r src includes tests
 
 job:check:tidy:
     stage: check
