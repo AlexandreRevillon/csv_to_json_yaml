@@ -40,7 +40,7 @@ job:build:
 job:test:
     stage: test
     script:
-        - make test
+        - make tests
         - build/utils
     when: always
     artifacts:
