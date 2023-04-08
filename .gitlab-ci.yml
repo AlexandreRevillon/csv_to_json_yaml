@@ -4,8 +4,6 @@ before_script:
     - apt-get update -y
     - apt-get upgrade -y
     - apt-get install -y clang-format clang-tidy clang-tools clang make check cppcheck libcppunit-subunit-dev lcov llvm valgrind
-    - rm -rf build
-    - mkdir build
     
 
 stages:
