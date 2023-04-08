@@ -58,8 +58,10 @@ job:coverage:
     script:
         - gcc --version
         - llvm-cov gcov --version
-        - llvm-cov gcov -f -b build/*
-        - lcov --gcov-tool `which llvm-cov`" gcov" --directory build --base-directory . -c -o cov.info
+        - echo '#!/bin/sh' > llvm-cov-gcov
+        - echo 'exec llvm-cov gcov "$@"' >> llvm-cov-gcov
+        - chmod +x llvm-cov-gcov
+        - lcov --gcov-tool `pwd`/llvm-cov-gcov --directory build --base-directory . -c -o cov.info
         - mkdir report
         - genhtml cov.info -o report
     coverage: '/^\s*lines\S*\s*(\d+(?:\.\d+)?%)\s*/'
