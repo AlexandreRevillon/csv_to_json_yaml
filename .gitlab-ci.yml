@@ -59,7 +59,7 @@ job:coverage:
         - gcc --version
         - llvm-cov gcov --version
         - llvm-cov gcov -f -b build/*
-        - lcov --gcov-tool `which llvm-cov` --directory build --base-directory . -c -o cov.info
+        - lcov --gcov-tool `which llvm-cov`" gcov" --directory build --base-directory . -c -o cov.info
         - mkdir report
         - genhtml cov.info -o report
     coverage: '/^\s*lines\S*\s*(\d+(?:\.\d+)?%)\s*/'
