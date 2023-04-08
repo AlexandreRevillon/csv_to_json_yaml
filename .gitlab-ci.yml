@@ -55,6 +55,8 @@ job:memcheck:
 job:coverage:
     stage: coverage
     script:
+        - gcc --version
+        - gcov --version
         - llvm-cov gcov -f -b build/*
         - lcov --directory build --base-directory .  -c -o cov.info
         - mkdir report
