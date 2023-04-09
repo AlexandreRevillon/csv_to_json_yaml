@@ -22,7 +22,7 @@ Dans ce projet, nous avons développé un programme permettant de convertir un f
 Le programme prend en charge plusieurs options pour personnaliser le filtrage des données, le format de sortie et le nom du fichier de sortie, comme expliqué dans la section "Utilisation" du README.
 
 
-#Compilation
+# Compilation
 Pour compiler le projet, utilisez la commande suivante :
 
 - Pour compiler que le projet sans les tests:
