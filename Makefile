@@ -5,8 +5,8 @@ EXTRA_CFLAGS=-fprofile-arcs -ftest-coverage # utile pour calculer la couverture 
 EXTRA_LDFLAGS=--coverage # edition de liens avec couverture de code
 
 #### Variables liées à la compilation des sources
- OBJ=build/utils.o 
- EXEC=build/utils
+ OBJ=build/utils.o
+ EXEC=build/convert_csrankings
 
 #### Variables liées à la compilation des tests unitaires
 TEST_SRC=tests/unit_tests.c
