@@ -19,7 +19,7 @@ Dans ce projet, nous avons développé un programme permettant de convertir un f
 - `process_line()` : Traite une ligne du fichier CSV, extrait les informations et les stocke dans une structure Membre.
 - `read_csv()` : Lit le fichier CSV et affiche ou écrit dans un fichier JSON ou YAML la sortie en fonction des paramètres.
 
-Le programme prend en charge plusieurs options pour personnaliser le filtrage des données, le format de sortie et le nom du fichier de sortie, comme expliqué dans la section "Options" du README.
+Le programme prend en charge plusieurs options pour personnaliser le filtrage des données, le format de sortie et le nom du fichier de sortie, comme expliqué dans la section "Utilisation" du README.
 
 
 #Compilation
