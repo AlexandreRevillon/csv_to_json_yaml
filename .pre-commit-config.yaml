@@ -1,0 +1,18 @@
+repos:
+- repo: local
+  hooks:
+  - id: clang-format
+    name: Check C code formatting
+    language: system
+    entry: clang-format --dry-run -Werror -style=file
+    files: '(tests|includes|src)/.*\.(c|h)$'
+  - id: cppcheck
+    name: Run cppcheck
+    language: system
+    entry: cppcheck --enable=warning,style,performance,portability --language=c --includes=includes src/ tests/
+    files: '(tests|src)/.*\.c$'
+  - id: make
+    name: Compile project
+    language: system
+    entry: make
+    always_run: true
