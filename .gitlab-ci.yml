@@ -4,6 +4,7 @@ before_script:
     - apt-get update -y
     - apt-get upgrade -y
     - apt-get install -y clang-format clang-tidy clang-tools clang make check cppcheck libcppunit-subunit-dev lcov llvm valgrind
+    
 
 stages:
     - codestyling
@@ -55,8 +56,12 @@ job:memcheck:
 job:coverage:
     stage: coverage
     script:
-        - llvm-cov gcov -f -b build/*
-        - lcov --directory build --base-directory .  -c -o cov.info
+        - gcc --version
+        - llvm-cov gcov --version
+        - echo '#!/bin/sh' > llvm-cov-gcov
+        - echo 'exec llvm-cov gcov "$@"' >> llvm-cov-gcov
+        - chmod +x llvm-cov-gcov
+        - lcov --gcov-tool `pwd`/llvm-cov-gcov --directory build --base-directory . -c -o cov.info
         - mkdir report
         - genhtml cov.info -o report
     coverage: '/^\s*lines\S*\s*(\d+(?:\.\d+)?%)\s*/'
