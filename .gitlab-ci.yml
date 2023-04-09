@@ -42,7 +42,7 @@ job:test:
     stage: test
     script:
         - make tests
-        - build/utils
+        - build/convert_csrankings
     when: always
     artifacts:
         paths:
@@ -50,7 +50,7 @@ job:test:
 
 job:memcheck:
     stage: test
-    script: valgrind build/utils
+    script: valgrind build/convert_csrankings
     when: on_success
 
 job:coverage:
