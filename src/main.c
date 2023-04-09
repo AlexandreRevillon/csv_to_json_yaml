@@ -15,8 +15,7 @@ int main(int argc, char *argv[]) {
   // Parcours des argument du main
   while (i < argc - 1) // Skip argv[0] (Nom du programme)
   {
-    if (strcmp(argv[i], "-t") == 0)
-    {
+    if (strcmp(argv[i], "-t") == 0) {
       if (strcmp(argv[i + 1], "yaml") == 0) {
         param.exit_format = YAML;
       } else if (strcmp(argv[i + 1], "json") == 0) {
