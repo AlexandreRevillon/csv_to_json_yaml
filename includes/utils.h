@@ -52,9 +52,11 @@ void trim_unwanted_chars(char *str, char unwanted);
 void write_output(FILE *exit_file, Membre m, Parametres p);
 
 /**
- * @brief      Lit le fichier CSV et affiche ou �crit dans un fichier JSON ou YAML la sortie
+ * @brief      Lit le fichier CSV et affiche ou �crit dans un fichier JSON ou
+ * YAML la sortie
  *
- * @param      param       Structure contenant les param�tres d'affichage ou de sauvegarde
+ * @param      param       Structure contenant les param�tres d'affichage ou de
+ * sauvegarde
  */
 void read_csv(Parametres param);
 
@@ -68,18 +70,22 @@ void read_csv(Parametres param);
 FILE *open_csv_file(const char *filename);
 
 /**
- * @brief      Ferme les fichiers JSON et YAML aprés avoir écrit la chaîne finale
+ * @brief      Ferme les fichiers JSON et YAML aprés avoir écrit la chaîne
+ * finale
  *
- * @param      param       Structure contenant les paramètres d'affichage ou de sauvegarde
+ * @param      param       Structure contenant les paramètres d'affichage ou de
+ * sauvegarde
  * @param      exit_file   Fichier de sortie
  * @param      str         Chaîne à écrire dans le fichier de sortie
  */
 void close_output_file(Parametres param, FILE *exit_file, char *str);
 
 /**
- * @brief      Vérifie si un membre doit être affiché ou non en fonction des paramètres donnés
+ * @brief      Vérifie si un membre doit être affiché ou non en fonction des
+ * paramètres donnés
  *
- * @param      param  Structure contenant les paramètres d'affichage ou de sauvegarde
+ * @param      param  Structure contenant les paramètres d'affichage ou de
+ * sauvegarde
  * @param      m      Membre dont les informations doivent être vérifiées
  *
  * @return     Retourne true si le membre doit être affiché, sinon false
@@ -87,19 +93,24 @@ void close_output_file(Parametres param, FILE *exit_file, char *str);
 bool should_print_member(Parametres param, Membre m);
 
 /**
- * @brief      Traite une ligne du fichier CSV, extrait les informations et les stocke dans une structure Membre
+ * @brief      Traite une ligne du fichier CSV, extrait les informations et les
+ * stocke dans une structure Membre
  *
  * @param      file  Fichier CSV ouvert
  * @param      line  Ligne du fichier CSV à traiter
- * @param      m     Pointeur vers une structure Membre pour stocker les informations extraites
+ * @param      m     Pointeur vers une structure Membre pour stocker les
+ * informations extraites
  */
 void process_line(char *line, Membre *m);
 
 /**
- * @brief      Prépare le fichier de sortie en fonction des paramètres donnés et écrit les informations d'entête
+ * @brief      Prépare le fichier de sortie en fonction des paramètres donnés et
+ * écrit les informations d'entête
  *
- * @param      param      Structure contenant les paramètres d'affichage ou de sauvegarde
- * @param      exit_file  Pointeur vers un pointeur de fichier pour stocker le fichier de sortie
+ * @param      param      Structure contenant les paramètres d'affichage ou de
+ * sauvegarde
+ * @param      exit_file  Pointeur vers un pointeur de fichier pour stocker le
+ * fichier de sortie
  * @param      str        Chaîne de caractères pour stocker l'entête formatée
  */
 void prepare_output_file(Parametres param, FILE **exit_file, char *str);
