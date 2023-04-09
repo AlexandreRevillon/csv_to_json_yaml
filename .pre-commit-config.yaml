@@ -1,18 +1,23 @@
+---
+# This file configures https://pre-commit.com/
+# Based on pre-commit hooks in
+#   https://github.com/pre-commit/pre-commit-hooks
+#   https://github.com/jumanjihouse/pre-commit-hooks
+# to use specific hooks and options.
+fail_fast: true
+
 repos:
-- repo: local
-  hooks:
-  - id: clang-format
-    name: Check C code formatting
-    language: system
-    entry: clang-format --dry-run -Werror -style=file
-    files: '(tests|includes|src)/.*\.(c|h)$'
-  - id: cppcheck
-    name: Run cppcheck
-    language: system
-    entry: cppcheck --enable=warning,style,performance,portability --language=c --includes=includes src/ tests/
-    files: '(tests|src)/.*\.c$'
-  - id: make
-    name: Compile project
-    language: system
-    entry: make
-    always_run: true
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: 1f6de3d70391131fac4b911ae913c568e571e34e
+    hooks:
+      - id: trailing-whitespace
+        exclude: \.output
+      - id: check-added-large-files
+      - id: check-yaml
+  - repo: local
+    hooks:
+      - id: tests
+        name: tests
+        entry: bash -c "make"
+        description: Tests expected output
+        language: system
