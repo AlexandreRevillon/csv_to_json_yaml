@@ -1,6 +1,4 @@
 /**
- * @brief      ...
- *
  * @author     Alexandre REVILLON & Arthur DUPIRE
  * @date       2023
  */
@@ -15,9 +13,9 @@ int main(int argc, char *argv[]) {
   Parametres param = {YAML, "", FALSE, {TRUE, TRUE, TRUE, TRUE}, "", FALSE};
 
   // Parcours des argument du main
-  while (i < argc - 1) /* Skip argv[0] (program name). */
+  while (i < argc - 1) // Skip argv[0] (Nom du programme)
   {
-    if (strcmp(argv[i], "-t") == 0) /* Process optional arguments. */
+    if (strcmp(argv[i], "-t") == 0)
     {
       if (strcmp(argv[i + 1], "yaml") == 0) {
         param.exit_format = YAML;
@@ -61,9 +59,6 @@ int main(int argc, char *argv[]) {
   }
 
   read_csv(param);
-
-  // printf("n: %d, a: %d, h: %d, s: %d\n", col_nahs[0], col_nahs[1],
-  // col_nahs[2], col_nahs[3]);
 
   return 0;
 }

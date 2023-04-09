@@ -1,3 +1,7 @@
+/**
+ * @author     Alexandre REVILLON & Arthur DUPIRE
+ * @date       2023
+ */
 
 #include <utils.h>
 
